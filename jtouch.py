@@ -42,7 +42,7 @@ def touch(fn, cfg):
    if (not os.path.exists(fn)): open(fn, 'w').close() 
    t = time.mktime(t.timetuple())
    os.utime(fn, (t, t))
-   print "jtouch: set date to %s" % (fn)
+   print "jtouch: processed %s" % (fn)
 
    return
 #-------------------------------------------------------------------------
