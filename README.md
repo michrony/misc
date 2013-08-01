@@ -1,3 +1,12 @@
+jtouch
+======
+
+Very simple json-based touch utility
+
+jtouch path - if ./jtouch.json is present, use date ime from there. Otherwise, use current date time
+
+Example of jtouch.json: {"hm" : [ 13, 15 ], "ymd" : [ 13, 8, 30 ]}
+
 mvnjars
 =======
 
