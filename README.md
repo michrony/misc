@@ -1,5 +1,15 @@
 jtouch
 ======
+
+Simple json-based touch utility
+
+Usage: jtouch [-jd json date time desc] path
+<br>
+       If desc is present, use date time from there. 
+<br>
+       Otherwise, use current date time
+
+=======
 <br>
 <b>Very simple json-based touch utility</b>
 <br>
