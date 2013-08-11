@@ -9,13 +9,11 @@ Usage: jtouch [-jd json date time desc] path
 <br>
        Otherwise, use current date time
 
-Example of jtouch.json: {"hm" : [ 13, 15 ], "ymd" : [ 13, 8, 30 ]}
-
 mvnjars
 =======
-
-Maven support util
-
+<br>
+<b>Maven support util</b>
+<br>
 mvnjars -h     - help
 <br>
 mvnjars -r     - download jars to local directory using mvn dependency:resolve
