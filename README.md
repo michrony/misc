@@ -9,12 +9,6 @@ Usage: jtouch [-jd json date time desc] path
 <br>
        Otherwise, use current date time
 
-=======
-<br>
-<b>Very simple json-based touch utility</b>
-<br>
-jtouch path - if ./jtouch.json is present, use date time from there. Otherwise, use current date time
-<br>
 Example of jtouch.json: {"hm" : [ 13, 15 ], "ymd" : [ 13, 8, 30 ]}
 
 mvnjars
