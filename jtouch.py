@@ -10,10 +10,7 @@
 
 # Version: 07/31/2013
 # Version: 08/11/2013: added argparse and -jd option
-<<<<<<< HEAD
 # Version: 09/10/2013: try using <script dir>/jtouch.json if -jd not specified
-=======
->>>>>>> 0fe61343df0b67d1ed8bc957b16892ced808135f
 
 import sys, os, glob, json, time
 import argparse
@@ -65,7 +62,6 @@ def touch(fn, cfg):
    return
 #-------------------------------------------------------------------------
 parser = argparse.ArgumentParser()
-<<<<<<< HEAD
 parser.add_argument("-jd", type = str, help="json date descriptor. If not specified try using <script dir>/jtouch.json")
 parser.add_argument("path", type = str, help="files to process")
 args = vars(parser.parse_args())
@@ -74,14 +70,6 @@ files     = args["path"]
 cfgn      = args["jd"]
 scrdircfg = os.path.dirname(sys.argv[0]).replace("\\", "/") + "/jtouch.json"
 if (cfgn==None and os.path.exists(scrdircfg)): cfgn = scrdircfg
-=======
-parser.add_argument("-jd", type = str, help="json date descriptor")
-parser.add_argument("path", type = str, help="files to process")
-args = vars(parser.parse_args())
-
-files = args["path"]
-cfgn  = args["jd"]
->>>>>>> 0fe61343df0b67d1ed8bc957b16892ced808135f
 if (cfgn!=None and not cfgn.endswith(".json")): cfgn = cfgn + ".json"
 cfg = getCfg(cfgn)
 
