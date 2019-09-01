@@ -1,0 +1,10 @@
+{
+   "HOST" : [
+      [ "192.168.0.100", "2221", "n" ],
+      [ "mmaron.net", "21", "y" ]
+   ],
+   "gps" : [ "guest", "guest", "/sdcard/Android/data/com.mendhak.gpslogger/files/" ],
+   "opencam" : [ "guest", "guest", "/storage/9016-4EF8/DCIM/OpenCamera/" ],
+   "cam" : [ "guest", "guest", "/storage/9016-4EF8/DCIM/Camera/" ],
+   "a2secp" : [ "guest", "guest", "/public_html/secp19/" ]
+}
