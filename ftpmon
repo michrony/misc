@@ -68,13 +68,13 @@ def procFtp(acct, delete):
    return
 
  print "procFtp(): connected to %s:%s" % (HOST[0], HOST[1])
- try: ftp.cwd(cfg_[2])
+ L = []
+ try: 
+   ftp.cwd(cfg_[2])
+   ftp.retrlines('MLSD', L.append)
  except ftplib.all_errors as e:
    print "procFtp(): can't set work dir " + str(e)
    return
- 
- L = []  
- ftp.retrlines('MLSD', L.append)
  print "procFtp(): set work dir %s, %d files" % (cfg_[2], len(L))
  
  for item in L:
