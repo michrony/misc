@@ -6,6 +6,7 @@
 # Version: 2019-08-22
 # Version: 2019-09-01: process all file names including blanks
 #                      added fdel
+# Version: 2020-01-12: now works both in Python 2.7 and 3.8.0
 
 import ftplib
 import os, json, argparse
@@ -21,12 +22,12 @@ def procFtp(acct, delete):
    F.close()
    cfg = json.loads(cfg)
  except:
-   print "procFtp(): failed to read " + cfgfn
+   print ("procFtp(): failed to read " + cfgfn)
    return
    
  # check HOST  
  if (not "HOST" in cfg):
-   print "procFtp(): missing HOST"
+   print ("procFtp(): missing HOST")
    return
  HOST = cfg["HOST"]
  del cfg["HOST"]
@@ -35,11 +36,11 @@ def procFtp(acct, delete):
       HOST = item
       break
  if (len(HOST)==0):
-     print "procFtp(): no active HOSTs"
+     print ("procFtp(): no active HOSTs")
      return
  
- print "procFtp(): using HOST: %s:%s" % (HOST[0], HOST[1])
- cfgk = cfg.keys()
+ print ("procFtp(): using HOST: %s:%s" % (HOST[0], HOST[1]))
+ cfgk = list(cfg.keys())
  cfgk.sort()
  accts = ""
  for k in cfgk:
@@ -47,70 +48,71 @@ def procFtp(acct, delete):
     else: accts = accts + " " + k 
  accts = accts.strip()
  if (not cfg):
-    print "procFtp(): no accounts found"
+    print ("procFtp(): no accounts found")
     return
 
- print "procFtp(): %d accounts found: %s" % (len(cfg.keys()), accts)
+ print ("procFtp(): %d accounts found: %s" % (len(list(cfg.keys())), accts))
 
  if (not acct in cfg): 
-    print "procFtp(): no such account: %s" % (acct)
+    print ("procFtp(): no such account: %s" % (acct))
     return
     
- print "procFtp(): using account: %s" % (acct)
+ print ("procFtp(): using account: %s" % (acct))
  
  cfg_ = cfg[acct]
  try:
    ftp = ftplib.FTP()
-   ftp.connect(HOST[0], HOST[1])
+   ftp.connect(HOST[0], int(HOST[1]))
    ftp.login(cfg_[0], cfg_[1])
  except ftplib.all_errors as e:
-   print "procFtp(): can't connect: " + str(e)
+   print ("procFtp(): can't connect: " + str(e))
    return
 
- print "procFtp(): connected to %s:%s" % (HOST[0], HOST[1])
+ print ("procFtp(): connected to %s:%s" % (HOST[0], HOST[1]))
  L = []
  try: 
    ftp.cwd(cfg_[2])
    ftp.retrlines('MLSD', L.append)
  except ftplib.all_errors as e:
-   print "procFtp(): can't set work dir " + str(e)
+   print ("procFtp(): can't set work dir " + str(e))
    return
- print "procFtp(): set work dir %s, %d files" % (cfg_[2], len(L))
+ print ("procFtp(): set work dir %s, %d files" % (cfg_[2], len(L)))
  
  for item in L:
-   #print item
+   #print (item)
    fn = item.split(";")
    fn = fn[-1][1: ]  
-   #print fn
+   #print (fn)
    if (fn=="." or fn==".."): continue
    if (delete):
       try: 
         ftp.delete(fn)
       except ftplib.all_errors as e:
-        print "procFtp(): can't delete %s - %s" % (fn, str(e))
+        print ("procFtp(): can't delete %s - %s" % (fn, str(e)))
         continue
-      print "procFtp(): deleted " + fn
+      print ("procFtp(): deleted " + fn)
       continue
    try:
      f = open("./" + fn, "wb")
      ftp.retrbinary("RETR " + fn, f.write, 8*1024)
      f.close()
    except ftplib.all_errors as e:
-     print "procFtp(): can't get %s - %s" % (fn, str(e))
+     print ("procFtp(): can't get %s - %s" % (fn, str(e)))
      continue
-   print "procFtp(): got " + fn
+   print ("procFtp(): got " + fn)
 
  return
 
 #==================================================================================
+help = "Basic ftp client"
 parser = argparse.ArgumentParser(description=help)
 group  = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('-fget', type=str, help="Account to use")
 group.add_argument('-fdel', type=str, help="Delete all files from this dir")
+
 args = vars(parser.parse_args())
 
 if (args["fdel"]==None): 
   procFtp(args["fget"].lower(), False)
 else: 
   procFtp(args["fdel"].lower(), True)
-  
